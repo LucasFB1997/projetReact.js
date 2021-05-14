@@ -53,6 +53,8 @@ class Incrementer extends React.Component {
     constructor (props) {
         super(props)
         this.state = {n: props.start, timer: null}
+        this.toggle = this.toggle.bind(this)
+        this.reset = this.reset.bind(this)
     }
 
     componentDidMount () {
@@ -85,9 +87,11 @@ class Incrementer extends React.Component {
 
     reset () {
         window.clearInterval(this.state.n)
-        this.setState({
-            n: 0
-        })
+        this.pause()
+        this.play()
+        this.setState((state, props) => ({
+            n: props.start
+        }))
     }
 
     toggle () {
@@ -100,8 +104,8 @@ class Incrementer extends React.Component {
 
     render () {
         return <div> 
-            Valeur: { this.state.n } <button onClick={this.reset.bind(this)}>Reset</button>
-                <button onClick={this.toggle.bind(this)}>{this.label()}</button>
+            Valeur: { this.state.n } <button onClick={this.reset}>Réinitialiser</button>
+                <button onClick={this.toggle}>{this.label()}</button>
             </div>
     }
 
